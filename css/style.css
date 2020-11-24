@@ -1,0 +1,220 @@
+/*
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+
+*,
+*::after,
+*::before {
+    /*basic reset*/
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+} 
+
+html{
+    font-size: 62.5%; /*define the rem to 10px*/ 
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    /*font-size: 16px;*/
+    line-height: 1.7;
+    color: #777;
+    padding: 3rem; /*This is giving a sort of portrait look to the website*/
+
+    box-sizing: border-box; /* the height and width will be defined to the entire box, not just for the content */
+}
+
+.header {
+    position: relative;
+    height: 95vh; /* fill up only 95% of the box */
+    background-image: linear-gradient( /*Define at least two colors to make a gradient effect*/
+        to right bottom, /*the gradient is going to right bottom*/
+        rgba(126, 213, 111, 0.801), 
+        rgba(40, 180, 133, 0.801)
+        ), url(../img/hero.jpg);
+    background-size: cover; /* Always try to fit the element inside the box*/
+    background-position: top;
+
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%); /*search more about this effect*/
+    /*look at clip path maker website*/
+}
+
+.header__logo-box {
+    /* adjust the logo to the left top corner,relative to the parent(header)*/
+    position: absolute; 
+    top: 4rem;
+    left: 4rem;
+}
+
+.header__logo{
+    height: 3.5rem; /*if you specify only the height, the width will be figured out by the browser*/
+}
+
+.header__text-box{
+    /* this part makes it 40% top and 50% left of the parent*/
+    position: absolute;
+    top: 40%;
+    left: 50%;
+
+    /* this part ajust -50% of the element's width and height */
+    transform:translate(-50%,-50%); 
+
+    text-align: center;
+}
+
+.heading-primary{
+    color:#fff;
+    text-transform: uppercase;
+
+    backface-visibility: hidden; /* Fixes the shaking bug in the animation */
+
+    margin-bottom: 6rem;
+}
+
+.heading-primary--main{
+    display: block; /* uses entire width available, and creates line breaks after and before them.*/
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 3.5rem;
+
+    /* specify the name of the animation and its duration */
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+
+    animation-timing-function: ease-out; /* animation starts quick and slows down */
+
+    /* check out other animation properties like delay,count and timing function */ 
+}
+
+.heading-primary--sub{
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1.75rem;
+
+    animation-name: moveInRight;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes moveInLeft{
+    /*begin*/
+    0%{
+        opacity: 0; /*invisible*/
+
+
+        transform: translateX(-10rem);
+            /* animates in the X direction ----> /*
+            /* positive goes to the right direction and a negative value goes to the left */
+    }
+
+    80%{
+        /* Goes a little bit to the right after 80% */
+        transform: translateX(1rem);
+    }
+
+    /*ends*/
+    100%{
+        opacity: 1;
+        transform: translate(0); /* returns to default */
+    }
+}
+
+@keyframes moveInRight{
+    0%{
+        opacity: 0;
+        transform: translateX(10rem);
+    }
+
+    80%{
+        transform: translateX(-1rem);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInBottom{
+    0%{
+        opacity: 0;
+        transform: translateY(3rem);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+/* Pseudo-classes define special states of an element
+for example: <a> is a link(has not been clicked), and <a> is being clicked (active), <a> has been hovered,etc. */
+
+.btn:link,
+.btn:visited{
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1.5rem 4rem;
+    
+    /*allows to set a width and height on the element, 
+    and top and bottom padding/margins are respected*/
+    display: inline-block; 
+
+    border-radius: 100px; /* shapes the edges */
+    transition: all .2s; /* apply all animations set for 0.2s */
+    position: relative;
+    font-size: 1.6rem;
+}
+
+.btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.2); /* shadow X, shadow Y, blur, color */
+}
+
+.btn:active{
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.2);
+}
+
+.btn--white{
+    background-color: #fff;
+    color: #777;
+}
+
+.btn::after{ /* ::after creates a pseudo-element that is the last child of the selected element. */
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+
+    /* make this effect button be behind the original button */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; /* defines the position of an element if they are one on top of another */
+
+    transition: all .4s;
+}
+
+.btn--white::after {
+    background-color: #fff;
+}
+
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6); /* increases the size */
+    opacity: 0; /* fades out */
+}
+
+.btn--animated{
+    animation: moveInBottom .5s ease-out .75s; /* animation: name, duration, timing function, delay */
+    animation-fill-mode: backwards; /* styles 0% before animation starts */
+}
